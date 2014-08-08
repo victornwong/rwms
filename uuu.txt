@@ -1,3 +1,4 @@
 kdidiidod
 
 additional line #2
+suppose to be in master branch add line #3
