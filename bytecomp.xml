@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project name="Bytecompiled things" default="info">
+<target name="info">
+	<echo>Byte-compile 'em general purpose funcs</echo>
+</target>
+</project>
