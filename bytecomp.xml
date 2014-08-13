@@ -6,6 +6,7 @@
 <property name="deploy.dir" value="${web.dir}/classes" />
 <property name="build.dir" value="./build" />
 <property name="jarname" value="vicutils.jar" />
+<property name="jar.dir" value="jar" />
 <property name="name" value="KingsCross_core_things" />
 <property name="testclass" value="org.victor.TestMeCode" />
 
@@ -27,14 +28,14 @@
 
 <target name="build" description="Compile source java files">
 	<javac destdir="${build.dir}" includeantruntime="false" target="1.6" source="1.6" >
-		<src path="${src.dir}"/>
+		<src path="${src.dir}" />
 		<classpath refid="master-classpath"/>
 	</javac>
 </target>
 
 <target name="build-jar">
-	<jar destfile="${build.dir}/${jarname}"
-		basedir="${build.dir}/org/victor"
+	<jar destfile="${jar.dir}/${jarname}"
+		basedir="${build.dir}"
 		includes="**"
 		excludes="**/Test.class">
 		<manifest>

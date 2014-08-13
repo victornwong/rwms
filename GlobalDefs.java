@@ -1,5 +1,8 @@
 package org.victor;
 
+import java.util.*;
+import java.text.*;
+
 public class GlobalDefs
 {
 public static String BLANK_REPLACER = "------";
@@ -35,6 +38,23 @@ public static String FOLDERCOMMITED = "COMMITED";
 public static String FOLDERRELEASED = "RELEASED";
 public static String FOLDERWIP = "WIP";
 public static String FOLDERRETEST = "RETEST";
-	
+
+SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+SimpleDateFormat dtf2 = new SimpleDateFormat("yyyy-MM-dd");
+SimpleDateFormat yearonly = new SimpleDateFormat("yyyy");
+DecimalFormat nf2 = new DecimalFormat("#0.00");
+DecimalFormat nf3 = new DecimalFormat("###,##0.00");
+DecimalFormat nf = new DecimalFormat("###,##0.00");
+DecimalFormat nf0 = new DecimalFormat("#");
+
+// used in RWMS_sql.java
+
+public final int BOM_JOBID = 1; // BOM link to job-id
+public final int PICKLIST_JOBID = 2; // pick-list link to job-id
+public final int BOM_DOID = 3; // BOM link to DO
+public final int PICKLIST_DOID = 4; // pick-list link to DO
+public final int DO_MANIFESTID = 5; // DO link to manifest
+public final int PR_JOB = 6; // PR link to job
+
 }
 

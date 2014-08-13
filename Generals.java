@@ -359,6 +359,18 @@ public final String todayISODateTimeString()
 	return dtf.format(now);
 }
 
+public final String makeQuotedFromComma(String iwhat)
+{
+	if(iwhat.equals("")) return "";
+	String[] pp = iwhat.split("\n");
+	String lcs = "";
+	for(int i=0; i<pp.length; i++)
+	{
+		lcs += "'" + pp[i].trim() + "',";
+	}
+	try { lcs = lcs.substring(0,lcs.length()-1); } catch (Exception e) {}
+	return lcs;
+}
 
 }
 // ENDOF public class Generals
