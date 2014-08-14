@@ -369,4 +369,19 @@ public final void populateUsernames(Listbox ilb, String discardname) throws SQLE
 	ilb.setSelectedIndex(0);
 }
 
+public final GroovyRowResult getStockItem_rec(String istkcode) throws SQLException
+{
+	String sqlstm = "select * from stockmasterdetails where stock_code='" + istkcode + "'";
+	return sqlhand.gpSqlFirstRow(sqlstm);
+}
+
+public final boolean checkStockExist(String istkc) throws SQLException
+{
+	String sqlstm = "select id from stockmasterdetails where stock_code='" + istkc + "'";
+	GroovyRowResult krr = sqlhand.gpSqlFirstRow(sqlstm);
+	return (krr != null) ? true : false;
+}
+
+
+
 } // ENDOF class RWMS_sql

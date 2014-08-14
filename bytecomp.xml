@@ -21,9 +21,10 @@
 	<echo message="${name} ANT build" />
 	<echo message="build : just build" />
 	<echo message="build-jar : make the jar" />
-	<echo message="deploy : deploy into WEB-INF" />
+	<echo message="deploy-jar : deploy into WEB-INF" />
 	<echo message="clean : clean-up" />
 	<echo message="run : run TestMeCode()" />
+	<echo message="restart : restart Tombat" />
 </target>
 
 <target name="build" description="Compile source java files">
@@ -33,7 +34,7 @@
 	</javac>
 </target>
 
-<target name="build-jar">
+<target name="build-jar" depends="build" >
 	<jar destfile="${jar.dir}/${jarname}"
 		basedir="${build.dir}"
 		includes="**"
@@ -62,14 +63,23 @@
 	</delete>
 </target>
 
+<target name="deploy-jar" depends="build-jar" description="Deploy JAR">
+	<copy file="${jar.dir}/${jarname}" tofile="${web.dir}/lib/${jarname}" overwrite="true" />
 <!--
-<target name="deploy" depends="build" description="Deploy application">
-	<copy todir="${deploy.path}/${name}" preservelastmodified="true">
+	<copy todir="${web.dir}/lib" preservelastmodified="true">
 		<fileset dir="${web.dir}">
 			<include name="**/*.*"/>
 		</fileset>
 	</copy>
-</target>
 -->
+</target>
+
+<target name="restart">
+	<exec executable="sudo">
+		<arg value="/etc/init.d/tomcat7"/>
+		<arg value="restart"/>
+	</exec>
+</target>
+
 
 </project>

@@ -5,6 +5,7 @@ import java.lang.*;
 import groovy.sql.*;
 import org.zkoss.zul.*;
 import org.zkoss.zk.ui.*;
+import org.zkoss.zk.ui.event.*;
 import java.math.BigDecimal;
 //import org.zkoss.zk.ui.*;
 //import org.zkoss.zk.zutl.*;
@@ -36,16 +37,19 @@ public final void clearUI_Field(Object[] iob)
 		if(iob[i] instanceof Listbox) { Listbox kk = (Listbox)iob[i]; kk.setSelectedIndex(0); }
 	}
 }
-/*
-public final void disableUI_obj(Object[] iob, boolean iwhat)
+
+public final void disableUI_obj(Component[] iob, boolean iwhat)
 {
 	for(int i=0; i<iob.length; i++)
 	{
-		Component kk = (Component)iob[i];
-		kk.setDisabled(iwhat);
+		if(iob[i] instanceof Checkbox) { Checkbox kk = (Checkbox)iob[i]; kk.setDisabled(iwhat); }
+		if(iob[i] instanceof Combobox) { Combobox kk = (Combobox)iob[i]; kk.setDisabled(iwhat); }
+		if(iob[i] instanceof Textbox) { Textbox kk = (Textbox)iob[i]; kk.setDisabled(iwhat); }
+		if(iob[i] instanceof Datebox) { Datebox kk = (Datebox)iob[i]; kk.setDisabled(iwhat); }
+		if(iob[i] instanceof Listbox) { Listbox kk = (Listbox)iob[i]; kk.setDisabled(iwhat); }
 	}
 }
-*/
+
 public final Object vMakeWindow(Object ipar, String ititle, String iborder, String ipos, String iw, String ih) throws InterruptedException
 {
 	Component kk = (Component)ipar;
@@ -58,78 +62,87 @@ public final Object vMakeWindow(Object ipar, String ititle, String iborder, Stri
 
 public final void popuListitems_Data2(ArrayList ikb, String[] ifl, GroovyRowResult ir)
 {
+	String kstr = "";
+
 	for(int i=0; i<ifl.length; i++)
 	{
-		try {
+		//try {
 		Object kk = ir.get(ifl[i]);
 
-		if(kk == null) kk = "";
+		if(kk == null) kstr = "";
 		else
-			if(kk instanceof Date) kk = dtf.format(kk);
+			if(kk instanceof Date) kstr = dtf.format(kk);
 		else
-			if(kk instanceof Integer) kk = nf0.format(kk);
+			if(kk instanceof Integer) kstr = nf0.format(kk);
 		else
 			if(kk instanceof BigDecimal)
 			{
 				BigDecimal xt = (BigDecimal)kk;
 				BigDecimal rt = xt.remainder(BigDecimal.ONE);
 				if(rt.floatValue() != 0.0)
-					kk = nf2.format(kk);
+					kstr = nf2.format(kk);
 				else
-					kk = nf0.format(kk);
+					kstr = nf0.format(kk);
 			}
 		else
-			if(kk instanceof Double) kk = nf2.format(kk);
+			if(kk instanceof Double) kstr = nf2.format(kk);
 		else
-			if(kk instanceof Float) kk = kk.toString();
+			if(kk instanceof Float) kstr = kk.toString();
 		else
 			if(kk instanceof Boolean)
 			{
 				Boolean mm = (Boolean)kk;
 				String wi = (mm) ? "Y" : "N";
-				kk = wi;
+				kstr = wi;
 			}
+		else
+			kstr = (String)kk;
 
-		ikb.add( kk );
-		} catch (Exception e) {}
+		ikb.add( kstr );
+		//} catch (Exception e) {}
 	}
 }
 
 public final void popuListitems_Data(ArrayList ikb, String[] ifl, GroovyRowResult ir)
 {
+	String kstr = "";
+
 	for(int i=0; i<ifl.length; i++)
 	{
-		try {
+		//try {
 		Object kk = ir.get(ifl[i]);
-		if(kk == null) kk = "";
+		if(kk == null) kstr = "";
 		else
-			if(kk instanceof Date) kk = dtf2.format(kk);
+
+			if(kk instanceof Date) kstr = dtf2.format(kk);
 		else
-			if(kk instanceof Integer) kk = nf0.format(kk);
+			if(kk instanceof Integer) kstr = nf0.format(kk);
 		else
 			if(kk instanceof BigDecimal)
 			{
 				BigDecimal xt = (BigDecimal)kk;
 				BigDecimal rt = xt.remainder(BigDecimal.ONE);
 				if(rt.floatValue() != 0.0)
-					kk = nf2.format(kk);
+					kstr = nf2.format(kk);
 				else
-					kk = nf0.format(kk);
+					kstr = nf0.format(kk);
 			}
 		else
-			if(kk instanceof Double) kk = nf2.format(kk);
+			if(kk instanceof Double) kstr = nf2.format(kk);
 		else
-			if(kk instanceof Float) kk = kk.toString();
+			if(kk instanceof Float) kstr = kk.toString();
 		else
 			if(kk instanceof Boolean)
 			{
 				Boolean mm = (Boolean)kk;
 				String wi = (mm) ? "Y" : "N";
-				kk = wi;
+				kstr = wi;
 			}
+		else
+			kstr = (String)kk;
 
-		ikb.add( kk );
-		} catch (Exception e) {}
+		ikb.add( kstr );
+		//} catch (Exception e) {}
 	}
 }
 
@@ -183,8 +196,8 @@ public final void populateUI_Data(Object[] iob, String[] ifl, GroovyRowResult ir
 	ListboxHandler lbhand = new ListboxHandler();
 	for(int i=0;i<iob.length;i++)
 	{
-		try
-		{
+//		try
+//		{
 			Object woi = ir.get(ifl[i]);
 
 			if(iob[i] instanceof Textbox || iob[i] instanceof Label)
@@ -197,6 +210,8 @@ public final void populateUI_Data(Object[] iob, String[] ifl, GroovyRowResult ir
 				if(woi instanceof Integer || woi instanceof Double || woi instanceof BigDecimal) kk = woi.toString();
 				else
 				if(woi instanceof Float) kk = nf2.format(woi);
+				else
+					kk = (String)woi;
 
 				if(iob[i] instanceof Textbox) { Textbox mm = (Textbox)iob[i]; mm.setValue(kk); }
 				if(iob[i] instanceof Label) { Label mm = (Label)iob[i]; mm.setValue(kk); }
@@ -218,7 +233,7 @@ public final void populateUI_Data(Object[] iob, String[] ifl, GroovyRowResult ir
 				kk.setValue( (Date)woi );
 			}
 
-		} catch (Exception e) {}
+//		} catch (Exception e) {}
 	}
 }
 
@@ -262,6 +277,20 @@ public final Checkbox gpMakeCheckbox(Object iparent, String iid, String ilabel, 
 	return retv;
 }
 
+// idropevt: define in caller module -- it's a class extending org.zkoss.zk.ui.event.EventListener
+public final Textbox gpMakeTextbox(Component iparent, String iid, String ivalue, String istyle, String iwidth, org.zkoss.zk.ui.event.EventListener idropevt)
+{
+	Textbox retv = new Textbox();
+	if(!iid.equals("")) retv.setId(iid);
+	if(!istyle.equals("")) retv.setStyle(istyle);
+	if(!ivalue.equals("")) retv.setValue(ivalue);
+	if(!iwidth.equals("")) retv.setWidth(iwidth);
+	retv.setDroppable("true");
+	retv.addEventListener("onDrop", idropevt);
+	retv.setParent(iparent);
+	return retv;
+}
+
 public final void gpmakeGridHeaderColumns_Width(String[] icols, String[] iwidths, Object iparent)
 {
 	Columns colms = new Columns();
@@ -282,23 +311,62 @@ public final void gpmakeGridHeaderColumns_Width(String[] icols, String[] iwidths
 	colms.setParent((Component)iparent);
 }
 
-// Non-UI util funcs - move to Generals.java
-
-/*
-public final int countMonthYearDiff(int itype, Object ist, Object ied)
+public final void blindTings(Component iwhat, Component icomp)
 {
-	//java.util.Calendar std = new GregorianCalendar();
-	//java.util.Calendar edd = new GregorianCalendar();
-	java.util.Calendar std = java.util.Calendar.getInstance();
-	java.util.Calendar edd = java.util.Calendar.getInstance();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	std.setTime( ist.getValue() );
-	edd.setTime( ied.getValue() );
-	int diffYear = edd.get(java.util.Calendar.YEAR) - std.get(java.util.Calendar.YEAR);
-	int diffMonth = diffYear * 12 + edd.get(java.util.Calendar.MONTH) - std.get(java.util.Calendar.MONTH);
-	return (itype == 1) ? diffMonth : diffYear;
+	Button kk = (Button)iwhat;
+	String itype = kk.getId();
+	String klk = kk.getLabel();
+	boolean bld = (klk.equals("+")) ? true : false;
+	kk.setLabel( (klk.equals("-")) ? "+" : "-" );
+	icomp.setVisible(bld);
 }
-*/
+
+public final void blindTings_withTitle(Component iwhat, Component icomp, Component itlabel)
+{
+	Button kk = (Button)iwhat;
+	String itype = kk.getId();
+	String klk = kk.getLabel();
+	boolean bld = (klk.equals("+")) ? true : false;
+	kk.setLabel( (klk.equals("-")) ? "+" : "-" );
+	icomp.setVisible(bld);
+
+	itlabel.setVisible((bld == false) ? true : false );
+}
+
+public final void activateModule(String iplayg, String parentdiv_name, String winfn, String windId, String uParams, userAccessObj uAO)
+{
+	SecurityFuncs sechand = new SecurityFuncs();
+	Include newinclude = new Include();
+	newinclude.setId(windId);
+
+	String includepath = winfn + "?myid=" + windId + "&" + uParams;
+	newinclude.setSrc(includepath);
+
+	sechand.setUserAccessObj(newinclude, uAO); // securityfuncs.zs
+
+	Div contdiv = (Div)Path.getComponent(iplayg + parentdiv_name);
+	newinclude.setParent(contdiv);
+
+} // activateModule()
+
+// Use to refresh 'em checkboxes labels -- can be used for other mods
+// iprefix: checkbox id prefix, inextcount: next id count, pcomp: parent component
+public final void refreshCheckbox_CountLabel(String iprefix, int inextcount, Component pcomp)
+{
+	int count = 1;
+	String bci;
+	Checkbox icb;
+	for(int i=1;i<inextcount; i++)
+	{
+		bci = iprefix + Integer.toString(i);
+		icb = (Checkbox)pcomp.getFellowIfAny(bci);
+		if(icb != null)
+		{
+			icb.setLabel(count + ".");
+			count++;
+		}
+	}
+}
 
 
 }

@@ -372,6 +372,27 @@ public final String makeQuotedFromComma(String iwhat)
 	return lcs;
 }
 
+// Merge 2 object-arrays into 1 - codes copied from some website
+public final Object[] mergeArray(Object[] lst1, Object[] lst2)
+{
+	List list = new ArrayList(Arrays.asList(lst1));
+	list.addAll(Arrays.asList(lst2));
+	Object[] c = list.toArray();
+	return c;
+}
+
+public final int countMonthYearDiff(int itype, Component ist, Component ied)
+{
+	Calendar std = new GregorianCalendar();
+	Calendar edd = new GregorianCalendar();
+	Datebox kist = (Datebox)ist; Datebox kied = (Datebox)ied;
+	std.setTime(kist.getValue());
+	edd.setTime(kied.getValue());
+	int diffYear = edd.get(Calendar.YEAR) - std.get(Calendar.YEAR);
+	int diffMonth = diffYear * 12 + edd.get(Calendar.MONTH) - std.get(Calendar.MONTH);
+	return (itype == 1) ? diffMonth : diffYear;
+}
+
 }
 // ENDOF public class Generals
 

@@ -647,6 +647,29 @@ int ihowmanycol, String ichkstyle, String ititle, String ititlestyle) throws SQL
 	newgrid.setParent(iholder);
 }
 
+// Lookup-func: get value1-value8 from lookup table by parent-name
+public final String getFieldsCommaString(String iparents, int icol) throws SQLException
+{
+	Generals kiboo = new Generals();
+	List<GroovyRowResult> aprs = getLookups_ByParent(iparents);
+	GroovyRowResult kk;
+	String retv = ""; String tpm;
+	String fld = "value" + Integer.toString(icol);
+	for(Object di : aprs)
+	{
+		kk = (GroovyRowResult)di;
+		tpm = kiboo.checkNullString((String)kk.get(fld));
+		retv += tpm + ",";
+	}
+
+	retv = retv.replaceAll(",,",",");
+	try {
+	retv = retv.substring(0,retv.length()-1);
+	} catch (Exception e) {}
+
+	return retv;
+}
+
 
 }
 

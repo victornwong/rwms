@@ -1,9 +1,0 @@
-kdidiidod
-
-additional line #2
-<<<<<<< HEAD
-suppose to be in master branch add line #3
-=======
-
-added in branch: opti
->>>>>>> opti

@@ -587,5 +587,20 @@ public final GroovyRowResult getFormKeeper_rec(String iwhat) throws SQLException
 	return retval;
 }
 
+/*
+public final int getWeekOfMonth(String thedate)
+{
+	String sqlstm = "SELECT CAST( (DATEPART(WEEK, '" + thedate + "') - DATEPART(WEEK, DATEADD(MM, " + 
+	"DATEDIFF(MM,0,'" + thedate + "'), 0))+ 1) AS INT) AS WEEK_OF_MONTH";
+
+	GroovyRowResult krr = gpSqlFirstRow(sqlstm);
+	if(krr == null) return -1;
+	int rt = krr.get("WEEK_OF_MONTH");
+
+	return rt;
+}
+*/
+
+
 }
 
