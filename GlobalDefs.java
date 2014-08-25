@@ -39,13 +39,13 @@ public static String FOLDERRELEASED = "RELEASED";
 public static String FOLDERWIP = "WIP";
 public static String FOLDERRETEST = "RETEST";
 
-SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-SimpleDateFormat dtf2 = new SimpleDateFormat("yyyy-MM-dd");
-SimpleDateFormat yearonly = new SimpleDateFormat("yyyy");
-DecimalFormat nf2 = new DecimalFormat("#0.00");
-DecimalFormat nf3 = new DecimalFormat("###,##0.00");
-DecimalFormat nf = new DecimalFormat("###,##0.00");
-DecimalFormat nf0 = new DecimalFormat("#");
+public static SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+public static SimpleDateFormat dtf2 = new SimpleDateFormat("yyyy-MM-dd");
+public static SimpleDateFormat yearonly = new SimpleDateFormat("yyyy");
+public static DecimalFormat nf2 = new DecimalFormat("#0.00");
+public static DecimalFormat nf3 = new DecimalFormat("###,##0.00");
+public static DecimalFormat nf = new DecimalFormat("###,##0.00");
+public static DecimalFormat nf0 = new DecimalFormat("#");
 
 // used in RWMS_sql.java
 

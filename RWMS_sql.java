@@ -369,6 +369,27 @@ public final void populateUsernames(Listbox ilb, String discardname) throws SQLE
 	ilb.setSelectedIndex(0);
 }
 
+public final void populateUsernames_check(Listbox ilb, String discardname) throws SQLException
+{
+	Generals kiboo = new Generals();
+	ListboxHandler lbhand = new ListboxHandler();
+
+	String sqlstm = "select username from portaluser where username<>'" + discardname + "' and deleted=0 and locked=0 order by username";
+	ArrayList recs = sqlhand.gpSqlGetRows(sqlstm);
+	if(recs.size() == 0) return;
+	ArrayList kabom = new ArrayList();
+	for( Object d : recs)
+	{
+		GroovyRowResult kk = (GroovyRowResult)d;
+		kabom.add( kiboo.checkNullString( (String)kk.get("username")) );
+		lbhand.insertListItems(ilb,kiboo.convertArrayListToStringArray(kabom),"false","");
+		kabom.clear();
+	}
+
+	ilb.setMultiple(true);
+	ilb.setCheckmark(true);
+}
+
 public final GroovyRowResult getStockItem_rec(String istkcode) throws SQLException
 {
 	String sqlstm = "select * from stockmasterdetails where stock_code='" + istkcode + "'";

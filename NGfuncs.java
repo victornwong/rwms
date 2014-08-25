@@ -368,5 +368,33 @@ public final void refreshCheckbox_CountLabel(String iprefix, int inextcount, Com
 	}
 }
 
+public final void fillComboboxUniq(String isqlstm, String ifield, Combobox icombo) throws java.sql.SQLException
+{
+	Generals kiboo = new Generals();
+	GridHandler gridhand = new GridHandler();
+	SqlFuncs sqlhand = new SqlFuncs();
+
+	ArrayList recs = sqlhand.gpSqlGetRows(isqlstm);
+	if(recs.size() == 0) return;
+
+	// clear any previous comboitem if any
+	Object[] remi = icombo.getItems().toArray();
+	Comboitem myk;
+	for(int i=0; i<remi.length; i++)
+	{
+		myk = (Comboitem)remi[i]; 
+		myk.setParent(null);
+	}
+
+	ArrayList kabom = new ArrayList();
+	for( Object d : recs)
+	{
+		GroovyRowResult kk = (GroovyRowResult)d;
+		kabom.add( kiboo.checkNullString( (String)kk.get(ifield)) );
+	}
+
+	gridhand.makeComboitem(icombo, kiboo.convertArrayListToStringArray(kabom) );
+	//String sqlstm = "select username from portaluser where username<>'" + discardname + "' and deleted=0 and locked=0 order by username";
+}
 
 }

@@ -228,6 +228,36 @@ public final String getTreecellItemLabel(Treeitem ilbitem, int icolumn)
 	return retval;
 }
 
+// 25/08/2014: Get Treecell from Treeitem by column
+public final Treecell getTreecellItem(Treeitem ilbitem, int icolumn)
+{
+	boolean done = false;
+	Treecell retval = null;
+	Component kkb = null;
+	Component workme = ilbitem;
+	int childsize;
+
+	while(!done)
+	{
+		Object[] thechildren = workme.getChildren().toArray();
+		childsize = thechildren.length;
+		for(int i=0; i<childsize; i++)
+		{
+			kkb = (Component)thechildren[i];
+			if(kkb instanceof Treerow) workme = (Treerow)kkb;
+
+			if(kkb instanceof Treecell)
+			{
+				if(icolumn == i)
+				{
+					done = true;
+					retval = (Treecell)kkb;
+				}
+			}
+		}
+	}
+	return retval;	
+}
 	
 }
 
