@@ -26,6 +26,30 @@ public class NGfuncs extends GlobalDefs
 		}
 	}
 
+public final void fillListbox_uniqField(String itbn, String ifl, Listbox ilb) throws java.sql.SQLException
+{
+	SqlFuncs sqlhand = new SqlFuncs();
+	ListboxHandler lbhand = new ListboxHandler();
+	String sqlstm = "select distinct " + ifl + " from " + itbn;
+	ArrayList r = sqlhand.gpSqlGetRows(sqlstm);
+	if(r.size() == 0) return;
+	String[] kabom = new String[1];
+	String dk;
+	GroovyRowResult kk;
+	for(Object d : r)
+	{
+		kk = (GroovyRowResult)d;
+		dk = (String)kk.get(ifl);
+		if(dk != null)
+		{
+			kabom[0] = dk;
+			lbhand.insertListItems(ilb,kabom,"false","");
+		}
+	}
+	ilb.setSelectedIndex(0);
+}
+
+
 public final void clearUI_Field(Object[] iob)
 {
 	Generals kiboo = new Generals();
