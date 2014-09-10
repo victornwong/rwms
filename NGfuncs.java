@@ -26,6 +26,28 @@ public class NGfuncs extends GlobalDefs
 		}
 	}
 
+// Make grid, with headers, move to byte-comp later
+public final void checkMakeGrid(String[] colws, String[] colls, Div idiv, String igridid, String irowsid, String ihdstyle, String iwidth, boolean icenter)
+{
+	if(idiv.getFellowIfAny(igridid) == null) // make new grid if none
+	{
+		Grid igrd = new Grid(); igrd.setId(igridid);
+		if(!iwidth.equals("")) igrd.setWidth(iwidth);
+		org.zkoss.zul.Columns icols = new org.zkoss.zul.Columns();
+		for(int i=0;i<colws.length;i++)
+		{
+			org.zkoss.zul.Column ico0 = new org.zkoss.zul.Column();
+			ico0.setWidth(colws[i]); ico0.setLabel(colls[i]);
+			if(icenter) ico0.setAlign("center");
+			ico0.setStyle(ihdstyle); ico0.setParent(icols);
+		}
+		icols.setParent(igrd);
+		org.zkoss.zul.Rows irows = new org.zkoss.zul.Rows();
+		irows.setId(irowsid); irows.setParent(igrd);
+		igrd.setParent(idiv);
+	}
+}
+
 public final void fillListbox_uniqField(String itbn, String ifl, Listbox ilb) throws java.sql.SQLException
 {
 	SqlFuncs sqlhand = new SqlFuncs();

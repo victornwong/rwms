@@ -403,6 +403,11 @@ public final boolean checkStockExist(String istkc) throws SQLException
 	return (krr != null) ? true : false;
 }
 
+public final GroovyRowResult getJobPicklist_rec(String iwhat) throws SQLException
+{
+	String sqlstm = "select * from rw_jobpicklist where origid=" + iwhat;
+	return sqlhand.gpSqlFirstRow(sqlstm);
+}
 
 
 } // ENDOF class RWMS_sql
